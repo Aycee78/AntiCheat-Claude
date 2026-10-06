@@ -1,0 +1,180 @@
+/* Student UI: white first, blue only where the student has to act.
+   Scoped under .sa so shared/admin styles are untouched. Fonts (Inter + Lato) are
+   bundled with the app via @fontsource (see main.jsx), so nothing is requested from
+   outside, which matters inside Safe Exam Browser. */
+.sa {
+  --blue: #1f5fd6;
+  --blue-strong: #1749a8;
+  --blue-tint: #eaf1fd;
+  --ink: #0b1f44;
+  --text: #33415c;
+  --muted: #5b6882;
+  --line: #d9e1ee;
+  --mist: #f5f8fd;
+  --warn: #9a4a06;
+  --warn-tint: #fff4e5;
+  --bad: #b42318;
+  --bad-tint: #fdecea;
+
+  /* FONTS: change these three lines to restyle all text.
+     body    = Inter: paragraphs, buttons, inputs, labels, timer digits
+     heading = Lato:  page titles, "Choose your role", dialog titles, "student" in the header
+     brand   = Lato:  the "AntiCheat" wordmark
+     (a font only works if its weights are imported in main.jsx) */
+  --font-body: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Lato', system-ui, 'Segoe UI', Roboto, sans-serif;
+  --font-brand: 'Lato', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  color-scheme: light;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  color: var(--text);
+  font: 16px/1.6 var(--font-body);
+}
+.sa *, .sa *::before, .sa *::after { box-sizing: border-box; }
+.sa h1, .sa h2, .sa p, .sa dl, .sa dd, .sa ul { margin: 0; }
+.sa a { color: var(--blue); text-underline-offset: 3px; }
+.sa :focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.sa-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* ---------- header ---------- */
+.sa-header { display: flex; justify-content: space-between; align-items: center; min-height: 3.5rem; padding: 0.5rem clamp(1rem, 4vw, 2.5rem); background: #fff; border-bottom: 1px solid var(--line); }
+.sa-brand { display: flex; align-items: center; gap: 0.6rem; }
+.sa-logo { display: grid; place-items: center; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 1.5px solid var(--blue); color: var(--blue); font-family: var(--font-brand); font-size: 0.7rem; font-weight: 900; letter-spacing: 0.02em; background: #fff; }
+.sa-wordmark { font-family: var(--font-brand); font-weight: 900; letter-spacing: -0.03em; line-height: 1; color: var(--ink); font-size: 1.5rem; }
+.sa-wordmark-lg { font-size: clamp(2.2rem, 7vw, 3rem); }
+.sa-wordmark-xl { font-size: clamp(2.8rem, 11vw, 5rem); }
+.sa-user { display: flex; align-items: center; gap: 0.5rem; color: var(--ink); }
+.sa-script { font-family: var(--font-heading); font-style: italic; font-weight: 400; font-size: 1.2rem; }
+.sa-usericon { color: var(--blue); }
+.sa-main { flex: 1; width: min(880px, 100%); margin: 0 auto; padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 4vw, 2rem) 4rem; }
+
+/* ---------- type ---------- */
+.sa-title { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.5rem, 4.5vw, 2rem); line-height: 1.2; color: var(--ink); }
+.sa-subtitle { font-family: var(--font-heading); font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+.sa-tagline { font-weight: 400; font-size: 1.05rem; color: var(--muted); }
+.sa-lead { color: var(--text); max-width: 34rem; }
+.sa-muted { color: var(--muted); }
+.sa-hint { font-size: 0.875rem; color: var(--muted); }
+.sa-center-text { text-align: center; }
+.sa-big { font-family: var(--font-heading); font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; font-size: clamp(2rem, 7vw, 3.25rem); line-height: 1.1; color: var(--ink); }
+.sa-error-text { color: var(--bad); font-size: 0.925rem; }
+.sa-notice { color: var(--bad); background: var(--bad-tint); border: 1px solid #f3c5c0; border-radius: 6px; padding: 0.6rem 0.9rem; font-size: 0.95rem; max-width: 34rem; }
+
+/* ---------- layout helpers ---------- */
+.sa-gate { display: grid; justify-items: center; align-content: center; gap: 1.25rem; text-align: center; min-height: 60svh; }
+.sa-narrow { width: min(34rem, 100%); margin: 0 auto; display: grid; gap: 1.5rem; }
+.sa-intro { display: grid; justify-items: center; gap: 0.75rem; text-align: center; }
+.sa-roles-row { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; }
+
+/* ---------- blue stage + white floating card (landing, 404) ---------- */
+/* the background image itself is set in Landing.jsx / NotFound.jsx (imported from src/assets) */
+.sa-stage {
+  flex: 1; display: grid; place-items: center; padding: clamp(1rem, 4vw, 3rem);
+  background-color: #eaf1fd; background-position: center; background-size: cover; background-repeat: no-repeat;
+}
+.sa-float {
+  width: min(30rem, 100%); display: grid; justify-items: center; gap: 1rem; text-align: center;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 5vw, 2.75rem);
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(23, 73, 168, 0.18), 0 2px 8px rgba(11, 31, 68, 0.06);
+}
+/* landing: wide and short - brand on top, role choice underneath in one row */
+.sa-float-wide { width: min(46rem, 100%); justify-items: stretch; gap: 1.5rem; text-align: left; padding: clamp(1.5rem, 4vw, 2.25rem) clamp(1.25rem, 5vw, 2.75rem); }
+.sa-float-head { display: flex; align-items: center; gap: 1.25rem; }
+.sa-float-head .sa-wordmark-xl { font-size: clamp(2.2rem, 7vw, 3.25rem); margin-bottom: 0.35rem; }
+.sa-float-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem 1.5rem; flex-wrap: wrap; padding-top: 1.5rem; border-top: 1px solid var(--line); }
+
+/* ---------- buttons & inputs ---------- */
+.sa-btn { font: inherit; font-weight: 600; min-height: 2.75rem; padding: 0.6rem 1.5rem; border-radius: 6px; border: 1px solid var(--line); background: #fff; color: var(--ink); cursor: pointer; text-decoration: none !important; display: inline-flex; align-items: center; justify-content: center; text-align: center; }
+.sa-btn:hover:not(:disabled) { border-color: var(--blue); color: var(--blue); }
+.sa-btn-primary { background: var(--blue); border-color: var(--blue); color: #fff !important; }
+.sa-btn-primary:hover:not(:disabled) { background: var(--blue-strong); border-color: var(--blue-strong); color: #fff !important; }
+.sa-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.sa-btn-wide { width: 100%; }
+
+.sa input[type='text'], .sa input:not([type]), .sa textarea, .sa-code-input {
+  font: inherit; width: 100%; min-height: 2.75rem; padding: 0.6rem 0.8rem; border: 1px solid #b9c5db; border-radius: 6px; background: #fff; color: var(--ink);
+}
+.sa input:focus, .sa textarea:focus { border-color: var(--blue); }
+.sa input[readonly] { background: var(--mist); color: var(--muted); border-color: var(--line); }
+.sa input[aria-invalid='true'] { border-color: var(--bad); }
+.sa textarea { resize: vertical; line-height: 1.5; }
+.sa-code-input { width: min(18rem, 90vw) !important; text-align: center; font-size: 1.5rem !important; letter-spacing: 0.3em; font-weight: 700; text-transform: uppercase; }
+.sa-form { display: grid; gap: 1.1rem; }
+.sa-form-center { justify-items: center; gap: 1rem; width: min(24rem, 100%); }
+.sa-field { display: grid; gap: 0.35rem; }
+.sa-field label { font-weight: 600; color: var(--ink); }
+
+/* ---------- cards ---------- */
+.sa-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 1.25rem 1.5rem; display: grid; gap: 0.75rem; justify-items: start; }
+.sa-card-title { font-family: var(--font-heading); font-weight: 700; font-size: 1.15rem; color: var(--ink); }
+.sa-facts { display: flex; gap: 2.5rem; flex-wrap: wrap; }
+.sa-facts dt { font-size: 0.8rem; color: var(--muted); }
+.sa-facts dd { font-weight: 700; color: var(--ink); font-size: 1.1rem; }
+.sa-rules { padding-left: 1.2rem; display: grid; gap: 0.4rem; text-align: left; }
+.sa-rules li::marker { color: var(--blue); }
+
+/* ---------- exam room ---------- */
+.sa-exam { display: grid; gap: 1rem; }
+.sa-exam-title { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.25rem, 3.5vw, 1.6rem); color: var(--ink); }
+.sa-infobar { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 1rem; padding: 0.8rem 1.1rem; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.sa-infobar > div { display: grid; align-content: center; }
+.sa-label { font-size: 0.8rem; color: var(--muted); }
+.sa-timer strong { font-size: 1.75rem; line-height: 1.15; font-variant-numeric: tabular-nums; color: var(--blue); }
+.sa-timer.is-low strong { color: var(--warn); }
+.sa-progress { display: grid; gap: 0.35rem; }
+.sa-progress-text { font-size: 0.875rem; color: var(--muted); }
+.sa-bar { height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.sa-bar span { display: block; height: 100%; background: var(--blue); transition: width 0.2s; }
+.sa-qnav { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.sa-qdot { min-width: 2.5rem; height: 2.5rem; border-radius: 6px; border: 1px solid var(--line); background: #fff; color: var(--text); font: inherit; font-weight: 600; cursor: pointer; }
+.sa-qdot:hover { border-color: var(--blue); }
+.sa-qdot.is-answered { background: var(--blue-tint); border-color: #b9cff7; color: var(--blue-strong); }
+.sa-qdot.is-current { background: var(--blue); border-color: var(--blue); color: #fff; }
+.sa-panel { border: 1px solid var(--line); border-radius: 8px; padding: clamp(1rem, 3vw, 2rem); min-height: 16rem; background: #fff; }
+.sa-panel:focus { outline: none; }
+.sa-question { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 0.6rem; }
+.sa-question legend, .sa-legend-like { padding: 0; margin-bottom: 0.9rem; display: grid; gap: 0.35rem; }
+.sa-qnum { font-size: 0.85rem; color: var(--muted); }
+.sa-prompt { font-size: 1.15rem; font-weight: 600; color: var(--ink); overflow-wrap: anywhere; white-space: pre-wrap; }
+.sa-req { color: var(--bad); }
+.sa-option { display: flex; align-items: flex-start; gap: 0.75rem; padding: 0.75rem 0.9rem; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; overflow-wrap: anywhere; }
+.sa-option:hover { border-color: var(--blue); }
+.sa-option.is-selected { background: var(--blue-tint); border-color: var(--blue); }
+.sa-option input { margin-top: 0.3rem; accent-color: var(--blue); flex: none; width: 1.05rem; height: 1.05rem; }
+.sa-exam-actions { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.sa-pager { display: flex; gap: 0.6rem; }
+
+/* ---------- modal ---------- */
+.sa-overlay { position: fixed; inset: 0; background: rgba(11, 31, 68, 0.5); display: grid; place-items: center; padding: 1rem; z-index: 50; }
+.sa-modal { background: #fff; border-radius: 10px; padding: 1.75rem; width: min(30rem, 100%); text-align: center; display: grid; gap: 1rem; border-top: 4px solid var(--blue); }
+.sa-modal:focus { outline: none; }
+.sa-modal-warn { border-top-color: var(--warn); }
+.sa-modal h2 { font-family: var(--font-heading); font-weight: 700; font-size: 1.5rem; color: var(--ink); }
+.sa-modal-body { display: grid; gap: 0.5rem; }
+.sa-modal-actions { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+.sa-modal-actions:empty { display: none; }
+
+/* ---------- spinner ---------- */
+.sa-spinner { width: 2.5rem; height: 2.5rem; border: 4px solid var(--blue-tint); border-top-color: var(--blue); border-radius: 50%; animation: sa-spin 0.9s linear infinite; }
+@keyframes sa-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .sa-spinner { animation-duration: 3s; } .sa-bar span { transition: none; } }
+
+@media (max-width: 600px) {
+  .sa-infobar { grid-template-columns: 1fr 1fr; }
+  .sa-infobar > div:first-child { grid-column: 1 / -1; }
+  .sa-exam-actions { flex-direction: column-reverse; align-items: stretch; }
+  .sa-pager .sa-btn { flex: 1; }
+  .sa-float { padding: 2rem 1.25rem; }
+  .sa-float-head { flex-direction: column; text-align: center; }
+  .sa-float-foot { justify-content: center; text-align: center; }
+}
+
+/* landing card: tall, everything stacked and centered (mockup screen 1) */
+.sa-float-tall { width: min(34rem, 100%); min-height: min(30rem, 85svh); align-content: center; gap: 1rem; padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 5vw, 3rem); }
+.sa-float-tall .sa-logo { border-width: 2px; }
+.sa-float-tall .sa-wordmark-xl { font-size: clamp(3rem, 12vw, 4.5rem); margin-top: 0.5rem; }
+.sa-roles-box { width: 100%; margin-top: 1rem; padding: 1.25rem 1.5rem 1.5rem; display: grid; justify-items: center; gap: 1rem; background: var(--mist); border-radius: 10px; }
